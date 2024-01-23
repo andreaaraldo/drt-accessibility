@@ -6,9 +6,7 @@ import matplotlib.pyplot as plt
 
 # seed = np.random.seed(120)
 
-walk_speed = 3.5
-
-def edgeOfBetweenCentroids(a):
+def edgeOfBetweenCentroids(a, walk_speed):
     node_1,node_2,node_3,node_4 = a[0],a[1],a[2],a[3]
     # distance between node_1 and node_2 is 1 km, and walking is 4.5 km/h, so time cost is 1/4.5 h.
     edge_list =[(node_1,node_2,1.0/walk_speed),(node_2,node_1,1.0/walk_speed)
@@ -19,7 +17,7 @@ def edgeOfBetweenCentroids(a):
                ,(node_2,node_4,1.0*1.414/walk_speed),(node_4,node_2,1.0*1.414/walk_speed)]
     return edge_list
 
-def edgeCentroidAndStation(centroid,metro_pos,all_pos,metro_waiting_time):
+def edgeCentroidAndStation(centroid,metro_pos,all_pos,metro_waiting_time, walk_speed):
     metro_station_name = list( metro_pos.keys())
     metro_station_list = list( metro_pos.values() )
     centroid_pos = np.array( all_pos[centroid] )
@@ -72,7 +70,7 @@ def compute_Gini(list_):
 
 class Graph:
     
-    def __init__(self, list_waiting_time):
+    def __init__(self, walking_time):
         self.g = nx.DiGraph()
         
         self.metro_node = []
@@ -87,8 +85,8 @@ class Graph:
         
         self.number_of_metro_stations = 0
         self.metro_waiting_time = {}
-        
-        self.list_waiting_time = list_waiting_time
+
+        self.walking_time = walking_time
         
     def add_metro_line(self,metro_line):
         self.g.add_nodes_from(metro_line.metro_station_list)
@@ -142,14 +140,14 @@ class Graph:
         
         list_edge_a = []
         for point in point_list:
-            list_edge_a+= edgeOfBetweenCentroids(point)
+            list_edge_a+= edgeOfBetweenCentroids(point, self.walking_speed)
         list_edge_a = list(set(list_edge_a))
         self.g.add_weighted_edges_from(list_edge_a)
     
     def add_edge_between_centroid_and_station(self):
         list_edge = []
         for i in self.centroid_node:
-            list_edge +=  edgeCentroidAndStation(i,self.metro_pos,self.all_pos,self.metro_waiting_time)
+            list_edge +=  edgeCentroidAndStation(i,self.metro_pos,self.all_pos,self.metro_waiting_time, self.walking_speed)
         self.g.add_weighted_edges_from(list_edge)
      
     
