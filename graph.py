@@ -60,7 +60,6 @@ def compute_Theil(list_):
 def compute_Gini(list_):  
     n_ = len(list_)
     list_.sort()
-get_acc
     sum_ = 0.
     for i in range( n_ ):
         sum_ = sum_ + (i+1)*list_[i]
