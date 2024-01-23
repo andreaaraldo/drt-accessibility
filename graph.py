@@ -36,13 +36,14 @@ class Graph:
         self.g = nx.DiGraph()
         
         self.metro_node = []
-        self.metro_pos = {}
+        self.metro_pos = {} 
         
         self.centroid_node = []
-        self.centroid_pos = []
+        self.centroid_pos = []  #It is an array of tuples. In the i-th elemtn of this array
+                                # you find the x,y position of the i-th centroid
         
         self.all_node = []
-        self.all_pos = {}
+        self.all_pos = {} 
         
         self.number_of_metro_stations = 0
         self.metro_waiting_time = {}
@@ -119,7 +120,9 @@ class Graph:
         node_size=[50 for i in range(self.number_of_metro_stations)] + [10 for i in range(len(self.centroid_node)) ]
         nx.draw(self.g, self.all_pos, with_labels=True, node_color=node_color, node_size = node_size)
         plt.show()
-        
+
+    #aa: I would rename it into "compute_accessibility" as "get" methods do not usually modify the objects, while in this
+    # case we modify the object graph, since we fill the attribute list_acc
     def get_acc(self):
         
         #len(popu_list) = 500
