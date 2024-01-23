@@ -192,10 +192,10 @@ class Graph:
         
         
   
-        self.centroid_polulation = {}
+        self.centroid_population = {}
         for i in range(len(self.centroid_node)):
-            self.centroid_polulation[self.centroid_node[i]] = popu_list[self.centroid_node[i]-80]
-        self.total_polulation = np.sum( list(self.centroid_polulation.values()) )
+            self.centroid_population[self.centroid_node[i]] = popu_list[self.centroid_node[i]-80]
+        self.total_population = np.sum( list(self.centroid_population.values()) )
         
         #claculate acc
         self.centroid_to_acc = {}
@@ -206,7 +206,7 @@ class Graph:
                 acc_i = 0.0
                 for j in dict_.keys():
                     if j in self.centroid_node and j != i:
-                        acc_i = acc_i + self.centroid_polulation[j]/dict_[j]
+                        acc_i = acc_i + self.centroid_population[j]/dict_[j]
                 list_acc.append(acc_i)
                 self.centroid_to_acc[i] = acc_i
                 
