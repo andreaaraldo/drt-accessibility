@@ -60,7 +60,7 @@ def compute_Theil(list_):
 def compute_Gini(list_):  
     n_ = len(list_)
     list_.sort()
-
+get_acc
     sum_ = 0.
     for i in range( n_ ):
         sum_ = sum_ + (i+1)*list_[i]
@@ -70,7 +70,7 @@ def compute_Gini(list_):
 
 class Graph:
     
-    def __init__(self, walking_time):
+    def __init__(self, walking_speed):
         self.g = nx.DiGraph()
         
         self.metro_node = []
@@ -86,7 +86,7 @@ class Graph:
         self.number_of_metro_stations = 0
         self.metro_waiting_time = {}
 
-        self.walking_time = walking_time
+        self.walking_speed = walking_speed
         
     def add_metro_line(self,metro_line):
         self.g.add_nodes_from(metro_line.metro_station_list)
