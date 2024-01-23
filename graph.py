@@ -6,15 +6,17 @@ import matplotlib.pyplot as plt
 
 # seed = np.random.seed(120)
 
+walk_speed = 3.5
+
 def edgeOfBetweenCentroids(a):
     node_1,node_2,node_3,node_4 = a[0],a[1],a[2],a[3]
     # distance between node_1 and node_2 is 1 km, and walking is 4.5 km/h, so time cost is 1/4.5 h.
-    edge_list =[(node_1,node_2,1.0/4.5),(node_2,node_1,1.0/4.5)
-                ,(node_2,node_3,1.0/4.5),(node_3,node_2,1.0/4.5)
-                ,(node_3,node_4,1.0/4.5),(node_4,node_3,1.0/4.5)
-                ,(node_4,node_1,1.0/4.5),(node_1,node_4,1.0/4.5)
-               ,(node_1,node_3,1.0*1.414/4.5),(node_3,node_1,1.0*1.414/4.5)
-               ,(node_2,node_4,1.0*1.414/4.5),(node_4,node_2,1.0*1.414/4.5)]
+    edge_list =[(node_1,node_2,1.0/walk_speed),(node_2,node_1,1.0/walk_speed)
+                ,(node_2,node_3,1.0/walk_speed),(node_3,node_2,1.0/walk_speed)
+                ,(node_3,node_4,1.0/walk_speed),(node_4,node_3,1.0/walk_speed)
+                ,(node_4,node_1,1.0/walk_speed),(node_1,node_4,1.0/walk_speed)
+               ,(node_1,node_3,1.0*1.414/walk_speed),(node_3,node_1,1.0*1.414/walk_speed)
+               ,(node_2,node_4,1.0*1.414/walk_speed),(node_4,node_2,1.0*1.414/walk_speed)]
     return edge_list
 
 def edgeCentroidAndStation(centroid,metro_pos,all_pos,metro_waiting_time):
@@ -25,10 +27,48 @@ def edgeCentroidAndStation(centroid,metro_pos,all_pos,metro_waiting_time):
     for i in range(len(metro_station_name)):
         station_name = metro_station_name[i]
         if np.linalg.norm(centroid_pos-np.array(metro_station_list[i]))<=3:#if distance between centroid and station < 3km, people can walk to station.
-            time_cost_walk_centroid_station = np.linalg.norm(centroid_pos-np.array(metro_station_list[i]))/4.5
+            time_cost_walk_centroid_station = np.linalg.norm(centroid_pos-np.array(metro_station_list[i]))/walk_speed
             list_out.append( (centroid,station_name,time_cost_walk_centroid_station+metro_waiting_time[station_name]) )
             list_out.append( (station_name,centroid,time_cost_walk_centroid_station) )
     return list_out
+
+def compute_Akinson(list_):
+    #Akinson
+    y_mean = np.mean( list_ )   
+    sum_ = 0.
+    for i in range( len(list_) ):
+        sum_ = sum_ + list_[i]**(-1) 
+    sum_ = 1 - (sum_/len(list_))**(-1)/y_mean
+    return sum_
+
+def compute_Pietra(list_):    
+    #Pietra     
+    sum_ = 0.
+    y_mean = np.mean( list_ ) 
+    for i in range( len(list_) ):
+        sum_ = sum_ +  np.abs(list_[i]-y_mean)/y_mean
+        sum_ = sum_/(2* len(list_) )
+    return sum_
+    
+def compute_Theil(list_):    
+    #Theil
+    sum_ = 0.
+    y_mean = np.mean( list_ ) 
+    for i in range( len(list_) ):
+        sum_ = sum_ +  list_[i]/y_mean*np.log( list_[i]/y_mean )
+    sum_ = sum_/len(list_)
+    return sum_
+
+def compute_Gini(list_):  
+    n_ = len(list_)
+    list_.sort()
+
+    sum_ = 0.
+    for i in range( n_ ):
+        sum_ = sum_ + (i+1)*list_[i]
+
+    gini_ = 2*sum_/n_/np.sum(list_) - (n_+1)/n_
+    return gini_
 
 class Graph:
     
@@ -123,7 +163,7 @@ class Graph:
 
     #aa: I would rename it into "compute_accessibility" as "get" methods do not usually modify the objects, while in this
     # case we modify the object graph, since we fill the attribute list_acc
-    def get_acc(self):
+    def compute_accessibility(self):
         
         #len(popu_list) = 500
         popu_list = [0,0,2417,2,0,0,0,0,85,1281,1872,2638,5300,0,1203,1115,3879,1073,708,1829,
@@ -176,23 +216,14 @@ class Graph:
         list_acc_0.sort()
         
         #Akinson
-        y_mean = np.mean( list_acc )   
-        sum_ = 0.
-        for i in range( len(list_acc) ):
-            sum_ = sum_ + list_acc[i]**(-1) 
-        sum_ = 1 - (sum_/len(list_acc))**(-1)/y_mean
+        sum_ = compute_Akinson(list_acc)
         
-        #Pietra     
-        sum_P = 0.
-        for i in range( len(list_acc) ):
-            sum_P = sum_P +  np.abs(list_acc[i]-y_mean)/y_mean
-        sum_P = sum_P/(2* len(list_acc) )
+        ##Pietra     
+        #sum_P = compute_Pietra(list_acc)
         
-        #Theil
-        sum_T = 0.
-        for i in range( len(list_acc) ):
-            sum_T = sum_T +  list_acc[i]/y_mean*np.log( list_acc[i]/y_mean )
-        sum_T = sum_T/len(list_acc)
+        #Gini
+        sum_G = compute_Gini(list_acc)
+
         
-        return [np.mean(list_acc_0),list_acc,sum_,sum_P,sum_T]
+        return [np.mean(list_acc_0),list_acc,sum_,sum_G]
     
