@@ -69,7 +69,7 @@ def compute_Gini(list_):
 
 class Graph:
     
-    def __init__(self, walking_speed):
+    def __init__(self, list_waiting_time, walking_speed):
         self.g = nx.DiGraph()
         
         self.metro_node = []
@@ -84,6 +84,7 @@ class Graph:
         
         self.number_of_metro_stations = 0
         self.metro_waiting_time = {}
+        self.list_waiting_time = list_waiting_time
 
         self.walking_speed = walking_speed
         
