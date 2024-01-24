@@ -93,7 +93,7 @@ class Graph:
 
         self.all_stations = []
         self.all_edges = []
-        self.centr_id_matrix = np.zeros(shape=(1, 1)) # shape is temporary
+        self.centr_id_matr = np.zeros(shape=(1, 1)) # shape is temporary
         self.acc_matr = np.zeros(shape=(1, 1)) # shape is temporary
         
         
