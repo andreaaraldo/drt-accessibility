@@ -98,10 +98,10 @@ class Graph:
         self.pop_matr = np.zeros(shape=(1, 1)) # shape is temporary # Population matrix
 
         # These are the extreme x and y positions of all centroids
-        leftmost=float('inf')
-        rightmost=-float('inf')
-        bottommost=float('inf')
-        upmost=-float('inf')
+        self.leftmost=float('inf')
+        self.rightmost=-float('inf')
+        self.bottommost=float('inf')
+        self.upmost=-float('inf')
 
         # Inequality indices
         self.ineq_Atkinson = 0
