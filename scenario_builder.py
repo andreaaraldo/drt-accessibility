@@ -168,4 +168,6 @@ def build_initial_graph(walking_speed):
     g.centr_id_matr = centr_id_matr
     g.acc_matr = acc_matr_init
 
+    g.leftmost, g.rightmost, g.bottommost, g.upmost = g.find_limits()
+
     return g
