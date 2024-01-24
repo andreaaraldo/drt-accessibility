@@ -230,17 +230,17 @@ class Graph:
         Returns centroids the limits of the x- and y-positions of the
         centroids
         """
-          leftmost=float('inf')
-          rightmost=-float('inf')
-          bottommost=float('inf')
-          upmost=-float('inf')
-          for pos in self.centroid_pos:
+        leftmost=float('inf')
+        rightmost=-float('inf')
+        bottommost=float('inf')
+        upmost=-float('inf')
+        for pos in self.centroid_pos:
             leftmost = min(leftmost, pos[0])
             rightmost = max(rightmost, pos[0])
             bottommost = min(bottommost, pos[1])
             upmost = max(upmost, pos[1])
         
-          return leftmost, rightmost, bottommost, upmost
+        return leftmost, rightmost, bottommost, upmost
 
     def build_accessibility_matrix(self):
           self.compute_accessibility()
