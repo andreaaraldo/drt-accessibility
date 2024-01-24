@@ -93,8 +93,8 @@ class Graph:
 
         self.all_stations = []
         self.all_edges = []
-        self.centr_id_matrix = []
-        self.acc_matr = []
+        self.centr_id_matrix = np.array()
+        self.acc_matr = np.array()
         
         
     def add_metro_line(self,metro_line):
