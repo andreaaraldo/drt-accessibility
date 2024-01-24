@@ -163,7 +163,6 @@ def build_initial_graph(walking_speed):
     g.node_size=[50 for i in range(73)]
 
     centr_id_matr, acc_matr_init = g.build_accessibility_matrix()
-    print(f"Inside build: centr_id_matr={centr_id_matr}")
     g.all_stations = all_stations
     g.all_edges = all_edges
     g.centr_id_matr = centr_id_matr
