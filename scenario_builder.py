@@ -1,3 +1,5 @@
+import graph
+
 def build_initial_graph(walking_speed):
     metro_stations_line_1 = [[14.05154836,  2.22004959],
        [15.13790836,  2.73616959],
