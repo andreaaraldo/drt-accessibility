@@ -90,6 +90,12 @@ class Graph:
 
         self.node_color = []
         self.node_size = []
+
+        self.all_stations = []
+        self.all_edges = []
+        self.centr_id_matrix = []
+        acc_matr = []
+        
         
     def add_metro_line(self,metro_line):
         self.g.add_nodes_from(metro_line.metro_station_list)
