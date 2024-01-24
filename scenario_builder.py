@@ -98,9 +98,6 @@ def build_initial_graph(walking_speed):
     all_edges = [(i,i+1) for i in range(nb_of_all_stations) if i!= 26 and i!= 57 and i!= 60 and i!= 72] + connection_between_lines
     g.add_edges_from(all_edges)
 
-    g.node_color=["green" for i in range(len(metro_stations_line_1))]+["orange" for i in range(len(metro_stations_line_2))]+["y" for i in range(len(metro_stations_line_3))]+["blue" for i in range(len(metro_stations_line_4))]
-    g.node_size=[50 for i in range(73)]
-
     
 
     # metro dwell time for each station (hour)
@@ -136,6 +133,8 @@ def build_initial_graph(walking_speed):
                                      dict( zip(node_ids_line_4, metro_stations_line_4)),
                                      dwell_time_4 )
 
+
+    
     #create Public transit graph
     g  = graph.Graph( list_waiting_time, walking_speed = walking_speed )
     
@@ -158,6 +157,10 @@ def build_initial_graph(walking_speed):
     g.add_centroids()
     g.add_edge_between_centroids()
     g.add_edge_between_centroid_and_station()
+
+    
+    g.node_color=["green" for i in range(len(metro_stations_line_1))]+["orange" for i in range(len(metro_stations_line_2))]+["y" for i in range(len(metro_stations_line_3))]+["blue" for i in range(len(metro_stations_line_4))]
+    g.node_size=[50 for i in range(73)]
 
     centr_id_matr, acc_matr_init = g.build_accessibility_matrix()
 
