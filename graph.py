@@ -415,4 +415,6 @@ def build_initial_graph(walking_speed):
     g.add_edge_between_centroids()
     g.add_edge_between_centroid_and_station()
 
-    return g, all_stations
+    centr_id_matr, acc_matr_init = self.build_accessibility_matrix()
+
+    return g, all_stations,centr_id_matr, acc_matr_init
