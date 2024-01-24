@@ -6,18 +6,18 @@ import matplotlib.pyplot as plt
 
 # seed = np.random.seed(120)
 
-def edgeOfBetweenCentroids(a, walk_speed):
+def edgeOfBetweenCentroids(a, walking_speed):
     node_1,node_2,node_3,node_4 = a[0],a[1],a[2],a[3]
     # distance between node_1 and node_2 is 1 km, and walking is 4.5 km/h, so time cost is 1/4.5 h.
-    edge_list =[(node_1,node_2,1.0/walk_speed),(node_2,node_1,1.0/walk_speed)
-                ,(node_2,node_3,1.0/walk_speed),(node_3,node_2,1.0/walk_speed)
-                ,(node_3,node_4,1.0/walk_speed),(node_4,node_3,1.0/walk_speed)
-                ,(node_4,node_1,1.0/walk_speed),(node_1,node_4,1.0/walk_speed)
-               ,(node_1,node_3,1.0*1.414/walk_speed),(node_3,node_1,1.0*1.414/walk_speed)
-               ,(node_2,node_4,1.0*1.414/walk_speed),(node_4,node_2,1.0*1.414/walk_speed)]
+    edge_list =[(node_1,node_2,1.0/walking_speed),(node_2,node_1,1.0/walking_speed)
+                ,(node_2,node_3,1.0/walking_speed),(node_3,node_2,1.0/walking_speed)
+                ,(node_3,node_4,1.0/walking_speed),(node_4,node_3,1.0/walking_speed)
+                ,(node_4,node_1,1.0/walking_speed),(node_1,node_4,1.0/walking_speed)
+               ,(node_1,node_3,1.0*1.414/walking_speed),(node_3,node_1,1.0*1.414/walking_speed)
+               ,(node_2,node_4,1.0*1.414/walking_speed),(node_4,node_2,1.0*1.414/walking_speed)]
     return edge_list
 
-def edgeCentroidAndStation(centroid,metro_pos,all_pos,metro_waiting_time, walk_speed):
+def edgeCentroidAndStation(centroid,metro_pos,all_pos,metro_waiting_time, walking_speed):
     metro_station_name = list( metro_pos.keys())
     metro_station_list = list( metro_pos.values() )
     centroid_pos = np.array( all_pos[centroid] )
@@ -25,7 +25,7 @@ def edgeCentroidAndStation(centroid,metro_pos,all_pos,metro_waiting_time, walk_s
     for i in range(len(metro_station_name)):
         station_name = metro_station_name[i]
         if np.linalg.norm(centroid_pos-np.array(metro_station_list[i]))<=3:#if distance between centroid and station < 3km, people can walk to station.
-            time_cost_walk_centroid_station = np.linalg.norm(centroid_pos-np.array(metro_station_list[i]))/walk_speed
+            time_cost_walk_centroid_station = np.linalg.norm(centroid_pos-np.array(metro_station_list[i]))/walking_speed
             list_out.append( (centroid,station_name,time_cost_walk_centroid_station+metro_waiting_time[station_name]) )
             list_out.append( (station_name,centroid,time_cost_walk_centroid_station) )
     return list_out
@@ -350,7 +350,7 @@ def build_initial_graph(walking_speed):
     
     connection_between_lines = [[7, 47], [14, 40], [14, 58], [34, 69], [40, 58], [51, 61]]
 
-    g = nx.DiGraph(list_waiting_time=[], walking_speed=walk_speed)
+    g = nx.DiGraph(list_waiting_time=[], walking_speed=walking_speed)
 
     all_stations = metro_stations_line_1 +metro_stations_line_2 +metro_stations_line_3 +metro_stations_line_4
     nb_of_all_stations = len(all_stations)
