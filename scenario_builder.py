@@ -167,6 +167,7 @@ def build_initial_graph(walking_speed):
     g.all_edges = all_edges
     g.centr_id_matr = centr_id_matr
     g.acc_matr = acc_matr_init
+    g.pop_matr = g.build_population_matrix()
 
     g.leftmost, g.rightmost, g.bottommost, g.upmost = g.find_limits()
 
