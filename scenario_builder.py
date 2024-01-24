@@ -162,13 +162,13 @@ def build_initial_graph(walking_speed):
     g.node_color=["green" for i in range(len(metro_stations_line_1))]+["orange" for i in range(len(metro_stations_line_2))]+["y" for i in range(len(metro_stations_line_3))]+["blue" for i in range(len(metro_stations_line_4))]
     g.node_size=[50 for i in range(73)]
 
+
+    g.leftmost, g.rightmost, g.bottommost, g.upmost = g.find_limits()
     centr_id_matr, acc_matr_init = g.build_accessibility_matrix()
     g.all_stations = all_stations
     g.all_edges = all_edges
     g.centr_id_matr = centr_id_matr
     g.acc_matr = acc_matr_init
     g.pop_matr = g.build_population_matrix()
-
-    g.leftmost, g.rightmost, g.bottommost, g.upmost = g.find_limits()
 
     return g
