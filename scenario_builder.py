@@ -1,3 +1,8 @@
+import numpy as np
+import networkx as nx
+import collections
+import ptline
+import matplotlib.pyplot as plt
 import graph
 
 def build_initial_graph(walking_speed):
