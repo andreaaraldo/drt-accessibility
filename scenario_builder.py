@@ -133,7 +133,7 @@ def build_initial_graph(walking_speed):
                                      dwell_time_4 )
 
     #create Public transit graph
-    g  = Graph( list_waiting_time, walking_speed = walking_speed )
+    g  = graph.Graph( list_waiting_time, walking_speed = walking_speed )
     
     #add each bus_line
     g.add_metro_line(metro_line_1)
