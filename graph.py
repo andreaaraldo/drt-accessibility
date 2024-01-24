@@ -244,7 +244,7 @@ class Graph:
 
     def build_accessibility_matrix(self):
           self.compute_accessibility()
-          leftmost, rightmost, bottommost, upmost = self.find_limits(self)
+          leftmost, rightmost, bottommost, upmost = self.find_limits()
         
           rows = upmost-bottommost+1
           cols = rightmost-leftmost+1
