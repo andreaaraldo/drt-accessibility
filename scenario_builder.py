@@ -161,4 +161,4 @@ def build_initial_graph(walking_speed):
 
     centr_id_matr, acc_matr_init = g.build_accessibility_matrix()
 
-    return g, all_stations,centr_id_matr, acc_matr_init
+    return g, all_stations, all_edges, centr_id_matr, acc_matr_init
