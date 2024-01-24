@@ -95,6 +95,16 @@ class Graph:
         self.all_edges = []
         self.centr_id_matr = np.zeros(shape=(1, 1)) # shape is temporary
         self.acc_matr = np.zeros(shape=(1, 1)) # shape is temporary
+
+        # These are the extreme x and y positions of all centroids
+        leftmost=float('inf')
+        rightmost=-float('inf')
+        bottommost=float('inf')
+        upmost=-float('inf')
+
+        # Inequality indices
+        self.ineq_Atkinson = 0
+        self.ineq_Gini = 0
         
         
     def add_metro_line(self,metro_line):
@@ -223,16 +233,16 @@ class Graph:
         list_acc_0.sort()
         
         #Akinson
-        sum_ = compute_Akinson(list_acc)
+        self.ineq_Atkinson = compute_Akinson(list_acc)
         
         ##Pietra     
         #sum_P = compute_Pietra(list_acc)
         
         #Gini
-        sum_G = compute_Gini(list_acc)
+        self.ineq_Gini = compute_Gini(list_acc)
 
         
-        return [np.mean(list_acc_0),list_acc,sum_,sum_G]
+        return [np.mean(list_acc_0),list_acc,self.ineq_Atkinson,self.ineq_Gini]
 
     def find_limits(self):
         """
@@ -253,18 +263,17 @@ class Graph:
 
     def build_accessibility_matrix(self):
           self.compute_accessibility()
-          leftmost, rightmost, bottommost, upmost = self.find_limits()
         
-          rows = upmost-bottommost+1
-          cols = rightmost-leftmost+1
+          rows = self.upmost-bottommost+1
+          cols = self.rightmost-leftmost+1
           acc_matr = np.array([([float('nan')]*cols) for i in range(rows)])
           centr_id_matr = np.array([([float('nan')]*cols) for i in range(rows)])
         
           for centr in self.centroid_node:
             acc = self.centroid_to_acc[centr]
             pos = self.centroid_to_pos[centr]
-            centr_id_matr[ upmost-pos[1], pos[0] ]=centr
-            acc_matr[ upmost-pos[1], pos[0] ]=acc
+            centr_id_matr[ self.upmost-pos[1], pos[0] ]=centr
+            acc_matr[ self.upmost-pos[1], pos[0] ]=acc
         
           return centr_id_matr, acc_matr
 
