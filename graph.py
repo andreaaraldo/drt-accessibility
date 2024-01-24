@@ -277,6 +277,18 @@ class Graph:
         
           return centr_id_matr, acc_matr
 
+    def build_population_matrix(self):
+          rows = self.upmost-bottommost+1
+          cols = self.rightmost-leftmost+1
+          pop_matr = np.array([([float('nan')]*cols) for i in range(rows)])
+          
+          for centr in self.centroid_node:
+            population = self.centroid_population[centr]
+            pos = self.centroid_to_pos[centr]
+            pop_matr[ self.upmost-pos[1], pos[0] ]=population
+        
+          return pop_matr
+
     #}end of Graph class
 
     
