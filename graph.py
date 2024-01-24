@@ -87,6 +87,9 @@ class Graph:
         self.list_waiting_time = list_waiting_time
 
         self.walking_speed = walking_speed
+
+        self.node_color = []
+        self.node_size = []
         
     def add_metro_line(self,metro_line):
         self.g.add_nodes_from(metro_line.metro_station_list)
