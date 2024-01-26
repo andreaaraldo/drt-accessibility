@@ -243,7 +243,7 @@ class Graph:
 
         self.avg_acc = 0
         cumulative_population = 0
-        for c in centroid_node:
+        for c in self.centroid_node:
             self.avg_acc = self.avg_acc + self.centroid_population[c]*self.centroid_to_acc[c]
             cumulative_population = cumulative_population + self.centroid_population[c]
         self.avg_acc = self.avg_acc / cumulative_population
