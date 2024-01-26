@@ -103,9 +103,10 @@ class Graph:
         self.bottommost=float('inf')
         self.upmost=-float('inf')
 
-        # Inequality indices
+        # Global indices
         self.ineq_Atkinson = 0
         self.ineq_Gini = 0
+        self.avg_acc = 0
         
         
     def add_metro_line(self,metro_line):
@@ -179,8 +180,6 @@ class Graph:
         nx.draw(self.g, self.all_pos, with_labels=True, node_color=node_color, node_size = node_size)
         plt.show()
 
-    #aa: I would rename it into "compute_accessibility" as "get" methods do not usually modify the objects, while in this
-    # case we modify the object graph, since we fill the attribute list_acc
     def compute_accessibility(self):
         
         #len(popu_list) = 500
@@ -242,6 +241,13 @@ class Graph:
         #Gini
         self.ineq_Gini = compute_Gini(list_acc)
 
+        self.avg_acc = 0
+        cumulative_population = 0
+        for c in centroid_node:
+            self.avg_acc = self.avg_acc + self.centroid_population[c]*self.centroid_to_acc[c]
+            cumulative_population = cumulative_population + self.centroid_population[c]
+        self.avg_acc = self.avg_acc / cumulative_population
+            
         
         return [np.mean(list_acc_0),list_acc,self.ineq_Atkinson,self.ineq_Gini]
 
