@@ -26,7 +26,7 @@ def edgeCentroidAndStation(centroid,metro_pos,all_pos,metro_waiting_time, walkin
     for i in range(len(metro_station_name)):
         station_name = metro_station_name[i]
         if np.linalg.norm(centroid_pos-np.array(metro_station_list[i]))<=3:
-        #if distance between centroid and station < 3km, people can walk to station.
+            #if distance between centroid and station < 3km, people can walk to station.
             time_cost_walk_centroid_station = np.linalg.norm(centroid_pos-np.array(metro_station_list[i]))/walking_speed
             list_out.append( (centroid,station_name,time_cost_walk_centroid_station+metro_waiting_time[station_name]) )
             list_out.append( (station_name,centroid,time_cost_walk_centroid_station) )
