@@ -18,13 +18,15 @@ def edgeOfBetweenCentroids(a, walking_speed):
     return edge_list
 
 def edgeCentroidAndStation(centroid,metro_pos,all_pos,metro_waiting_time, walking_speed):
+""" Add an edge between the centroid and the metro sations within 3 Km """
     metro_station_name = list( metro_pos.keys())
     metro_station_list = list( metro_pos.values() )
     centroid_pos = np.array( all_pos[centroid] )
     list_out = []
     for i in range(len(metro_station_name)):
         station_name = metro_station_name[i]
-        if np.linalg.norm(centroid_pos-np.array(metro_station_list[i]))<=3:#if distance between centroid and station < 3km, people can walk to station.
+        if np.linalg.norm(centroid_pos-np.array(metro_station_list[i]))<=3:
+        #if distance between centroid and station < 3km, people can walk to station.
             time_cost_walk_centroid_station = np.linalg.norm(centroid_pos-np.array(metro_station_list[i]))/walking_speed
             list_out.append( (centroid,station_name,time_cost_walk_centroid_station+metro_waiting_time[station_name]) )
             list_out.append( (station_name,centroid,time_cost_walk_centroid_station) )
@@ -166,6 +168,7 @@ class Graph:
         self.g.add_weighted_edges_from(list_edge_a)
     
     def add_edge_between_centroid_and_station(self):
+    """ Add an edge between all centroids to all metro stations """
         list_edge = []
         for i in self.centroid_node:
             list_edge +=  edgeCentroidAndStation(i,self.metro_pos,self.all_pos,self.metro_waiting_time, self.walking_speed)
