@@ -124,6 +124,10 @@ class Graph:
         
     def add_connection(self, connection_and_transfer_time ):
         self.g.add_weighted_edges_from(connection_and_transfer_time)
+
+    def remove_connection(self, u,v):
+        """ Remove the edge between node u and v """
+        self.g.remove_edge(u,v)
         
     def add_centroids(self):
         centroid_node = []
