@@ -131,7 +131,7 @@ class Graph:
             self.g.remove_edge(u,v)
             break
         except NetworkXError:
-            #
+            print("")
         
     def add_centroids(self):
         centroid_node = []
