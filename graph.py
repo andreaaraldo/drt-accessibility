@@ -127,7 +127,11 @@ class Graph:
 
     def remove_connection(self, u,v):
         """ Remove the edge between node u and v """
-        self.g.remove_edge(u,v)
+        try:
+            self.g.remove_edge(u,v)
+            break
+        except NetworkXError:
+            #
         
     def add_centroids(self):
         centroid_node = []
