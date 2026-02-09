@@ -129,7 +129,6 @@ class Graph:
         """ Remove the edge between node u and v """
         try:
             self.g.remove_edge(u,v)
-            break
         except NetworkXError:
             print(".")
         
